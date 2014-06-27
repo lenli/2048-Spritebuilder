@@ -11,5 +11,9 @@
 @interface Tile : CCNode
 @property (strong, nonatomic) CCLabelTTF *valueLabel;
 @property (strong, nonatomic) CCNodeColor *backgroundNode;
+@property (nonatomic) NSInteger value;
+@property (nonatomic, assign) BOOL mergedThisRound;
+
+- (void)updateValueDisplay;
 
 @end
