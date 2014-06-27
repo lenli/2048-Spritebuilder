@@ -12,6 +12,10 @@
 @interface Grid()
 @property (strong, nonatomic) NSMutableArray *gridArray;
 @property (strong, nonatomic) NSNull *noTile;
+@property (nonatomic) CGFloat columnWidth;
+@property (nonatomic) CGFloat columnHeight;
+@property (nonatomic) CGFloat tileMarginVertical;
+@property (nonatomic) CGFloat tileMarginHorizontal;
 
 @end
 
@@ -249,9 +253,13 @@
     // 1) update the game data
     Tile *mergedTile = self.gridArray[x][y];
     Tile *otherTile = self.gridArray[xOtherTile][yOtherTile];
+    self.score += mergedTile.value + otherTile.value;
+    otherTile.value *= 2;
     otherTile.mergedThisRound = YES;
     
-    otherTile.value *= 2;
+    if (otherTile.value == WIN_TILE) {
+        [self win];
+    }
     self.gridArray[x][y] = self.noTile;
     // 2) update the UI
     CGPoint otherTilePosition = [self positionForColumn:xOtherTile row:yOtherTile];
@@ -275,6 +283,28 @@
             }
         }
     }
+}
+
+- (void)win {
+    NSString *winMessage = [NSString stringWithFormat:@"Congratulations, you got %d!", WIN_TILE];
+    [self endGameWithTitle:@"You win!"
+               withMessage:winMessage];
+}
+
+- (void)lose {
+    NSString *loseMessage = [NSString stringWithFormat:@"No more moves.  You failed to get %d!", WIN_TILE];
+    [self endGameWithTitle:@"You lost!"
+               withMessage:loseMessage];}
+
+- (void)endGameWithTitle:(NSString *)title
+              withMessage:(NSString *)message {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:@"Ok"
+                                          otherButtonTitles:nil];
+    [alert show];
+    
 }
 
 #pragma mark - Gesture Recognizer Methods

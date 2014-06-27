@@ -10,11 +10,9 @@
 
 static const NSInteger GRID_SIZE = 4;
 static const NSInteger START_TILES = 2;
+static const NSInteger WIN_TILE = 8;
 
 @interface Grid : CCNodeColor
-@property (nonatomic) CGFloat columnWidth;
-@property (nonatomic) CGFloat columnHeight;
-@property (nonatomic) CGFloat tileMarginVertical;
-@property (nonatomic) CGFloat tileMarginHorizontal;
+@property (nonatomic, assign) NSInteger score;
 
 @end
