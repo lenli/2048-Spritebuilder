@@ -8,6 +8,7 @@
 
 #import "Grid.h"
 #import "Tile.h"
+#import "GameEnd.h"
 
 @interface Grid()
 @property (strong, nonatomic) NSMutableArray *gridArray;
@@ -56,7 +57,7 @@
 	float y = self.tileMarginVertical;
 	for (int i = 0; i < GRID_SIZE; i++) {
 		for (int j = 0; j < GRID_SIZE; j++) {
-			CCNodeColor *backgroundTile = [CCNodeColor nodeWithColor:[CCColor blueColor]];
+			CCNodeColor *backgroundTile = [CCNodeColor nodeWithColor:[CCColor lightGrayColor]];
 			backgroundTile.contentSize = CGSizeMake(self.columnWidth, self.columnHeight);
 			backgroundTile.position = ccp(x, y);
 			[self addChild:backgroundTile];
@@ -340,6 +341,14 @@
 
 - (void)endGameWithTitle:(NSString *)title
               withMessage:(NSString *)message {
+    
+    GameEnd *gameEndPopover = (GameEnd *)[CCBReader load:@"GameEnd"];
+    gameEndPopover.positionType = CCPositionTypeNormalized;
+    gameEndPopover.position = ccp(0.5,0.5);
+    gameEndPopover.zOrder = INT_MAX;
+    [gameEndPopover setMessage:title score:self.score];
+    [self addChild:gameEndPopover];
+    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                     message:message
                                                    delegate:self
@@ -354,8 +363,11 @@
         [[NSUserDefaults standardUserDefaults] setObject:highScore forKey:@"highscore"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
+    
+    for (UIGestureRecognizer *gesture in [[[CCDirector sharedDirector] view] gestureRecognizers]) {
+        [[[CCDirector sharedDirector] view] removeGestureRecognizer:gesture];
+    };
 }
-
 
 #pragma mark - Gesture Recognizer Methods
 
