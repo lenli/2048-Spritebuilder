@@ -211,7 +211,7 @@
     }
     
     if (movedTilesThisRound) {
-        [self spawnRandomTile];
+        [self nextRound];
     }
 }
 
@@ -262,6 +262,19 @@
     }];
     CCActionSequence *sequence = [CCActionSequence actionWithArray:@[moveTo, mergeTile, remove]];
     [mergedTile runAction:sequence];
+}
+
+- (void)nextRound {
+    [self spawnRandomTile];
+    for (int i = 0; i < GRID_SIZE; i++) {
+        for (int j = 0; j < GRID_SIZE; j++) {
+            Tile *tile = self.gridArray[i][j];
+            if (![tile isEqual:_noTile]) {
+                // reset merged flag
+                tile.mergedThisRound = NO;
+            }
+        }
+    }
 }
 
 #pragma mark - Gesture Recognizer Methods
