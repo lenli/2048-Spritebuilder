@@ -283,6 +283,48 @@
             }
         }
     }
+    BOOL movePossible = [self movePossible];
+    if (!movePossible) {
+        [self lose];
+    }
+}
+
+
+- (BOOL)movePossible {
+    for (int i = 0; i < GRID_SIZE; i++) {
+        for (int j = 0; j < GRID_SIZE; j++) {
+            Tile *tile = _gridArray[i][j];
+            // no tile at this position
+            if ([tile isEqual:self.noTile]) {
+                // move possible, we have a free field
+                return TRUE;
+            } else {
+                // there is a tile at this position. Check if this tile could move
+                Tile *topNeighbour = [self tileForIndex:i y:j+1];
+                Tile *bottomNeighbour = [self tileForIndex:i y:j-1];
+                Tile *leftNeighbour = [self tileForIndex:i-1 y:j];
+                Tile *rightNeighbour = [self tileForIndex:i+1 y:j];
+                NSArray *neighours = @[topNeighbour, bottomNeighbour, leftNeighbour, rightNeighbour];
+                for (id neighbourTile in neighours) {
+                    if (neighbourTile != self.noTile) {
+                        Tile *neighbour = (Tile *)neighbourTile;
+                        if (neighbour.value == tile.value) {
+                            return TRUE;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return FALSE;
+}
+
+- (id)tileForIndex:(NSInteger)x y:(NSInteger)y {
+    if (![self indexValid:x y:y]) {
+        return self.noTile;
+    } else {
+        return self.gridArray[x][y];
+    }
 }
 
 - (void)win {
@@ -305,7 +347,15 @@
                                           otherButtonTitles:nil];
     [alert show];
     
+    NSNumber *highScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"highscore"];
+    if (self.score > [highScore intValue]) {
+        // new highscore!
+        highScore = [NSNumber numberWithInt:self.score];
+        [[NSUserDefaults standardUserDefaults] setObject:highScore forKey:@"highscore"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
+
 
 #pragma mark - Gesture Recognizer Methods
 
