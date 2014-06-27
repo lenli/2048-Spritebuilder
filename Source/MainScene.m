@@ -7,7 +7,16 @@
 //
 
 #import "MainScene.h"
+#import "Grid.h"
+
+@interface MainScene()
+@property (strong, nonatomic) Grid *grid;
+@property (strong, nonatomic) CCLabelTTF *scoreLabel;
+@property (strong, nonatomic) CCLabelTTF *highscoreLabel;
+
+@end
 
 @implementation MainScene
+
 
 @end
