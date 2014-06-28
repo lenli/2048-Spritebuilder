@@ -10,7 +10,7 @@
 
 static const NSInteger GRID_SIZE = 4;
 static const NSInteger START_TILES = 2;
-static const NSInteger WIN_TILE = 2048;
+static const NSInteger WIN_TILE = 6144;
 
 @interface Grid : CCNodeColor
 @property (nonatomic, assign) NSInteger score;

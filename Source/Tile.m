@@ -12,7 +12,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.value = (arc4random()%2+1)*2;
+        self.value = (arc4random()%2+1)*3;
     }
     return self;
 }
@@ -21,37 +21,37 @@
     self.valueLabel.string = [NSString stringWithFormat:@"%d", self.value];
     CCColor *backgroundColor = nil;
     switch (self.value) {
-        case 2:
+        case 3:
             backgroundColor = [CCColor colorWithRed:20.f/255.f green:20.f/255.f blue:80.f/255.f];
             break;
-        case 4:
+        case 6:
             backgroundColor = [CCColor colorWithRed:20.f/255.f green:20.f/255.f blue:140.f/255.f];
             break;
-        case 8:
+        case 12:
             backgroundColor = [CCColor colorWithRed:20.f/255.f green:60.f/255.f blue:220.f/255.f];
             break;
-        case 16:
+        case 24:
             backgroundColor = [CCColor colorWithRed:20.f/255.f green:120.f/255.f blue:120.f/255.f];
             break;
-        case 32:
+        case 48:
             backgroundColor = [CCColor colorWithRed:20.f/255.f green:160.f/255.f blue:120.f/255.f];
             break;
-        case 64:
+        case 96:
             backgroundColor = [CCColor colorWithRed:20.f/255.f green:160.f/255.f blue:60.f/255.f];
             break;
-        case 128:
+        case 384:
             backgroundColor = [CCColor colorWithRed:50.f/255.f green:160.f/255.f blue:60.f/255.f];
             break;
-        case 256:
+        case 768:
             backgroundColor = [CCColor colorWithRed:80.f/255.f green:120.f/255.f blue:60.f/255.f];
             break;
-        case 512:
+        case 1536:
             backgroundColor = [CCColor colorWithRed:140.f/255.f green:70.f/255.f blue:60.f/255.f];
             break;
-        case 1024:
+        case 3072:
             backgroundColor = [CCColor colorWithRed:170.f/255.f green:30.f/255.f blue:60.f/255.f];
             break;
-        case 2048:
+        case 6144:
             backgroundColor = [CCColor colorWithRed:220.f/255.f green:30.f/255.f blue:30.f/255.f];
             break;
         default:
